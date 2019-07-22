@@ -1,0 +1,89 @@
+:host {
+}
+
+.wrapper {
+   width: 100%;
+   max-width: 500px;
+   padding: 10px;
+   border-radius: 4px;
+   margin: 10px;
+   float: left;
+   box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+
+   &.red {
+      color: black;
+      background-color: #f44336;
+   }
+   &.pink {
+      color: black;
+      background-color: #e91e63;
+   }
+   &.purple {
+      color: white;
+      background-color: #9c27b0;
+   }
+   &.deep-purple {
+      color: white;
+      background-color: #673ab7;
+   }
+   &.indigo {
+      color: white;
+      background-color: #3f51b5;
+   }
+   &.blue {
+      color: black;
+      background-color: #2196f3;
+   }
+   &.light-blue {
+      color: black;
+      background-color: #03a9f4;
+   }
+   &.cyan {
+      color: black;
+      background-color: #00bcd4;
+   }
+   &.teal {
+      color: black;
+      background-color: #009688;
+   }
+   &.green {
+      color: black;
+      background-color: #4caf50;
+   }
+   &.light-green {
+      color: black;
+      background-color: #8bc34a;
+   }
+   &.lime {
+      color: black;
+      background-color: #cddc39;
+   }
+   &.yellow {
+      color: black;
+      background-color: #ffeb3b;
+   }
+   &.amber {
+      color: black;
+      background-color: #ffc107;
+   }
+   &.orange {
+      color: black;
+      background-color: #ff9800;
+   }
+   &.deep-orange {
+      color: black;
+      background-color: #ff5722;
+   }
+   &.brown {
+      color: white;
+      background-color: #795548;
+   }
+   &.grey {
+      color: black;
+      background-color: #9e9e9e;
+   }
+   &.blue-grey {
+      color: black;
+      background-color: #607d8b;
+   }
+}

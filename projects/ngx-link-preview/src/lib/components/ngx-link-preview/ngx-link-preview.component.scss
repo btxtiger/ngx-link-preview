@@ -1,0 +1,123 @@
+.ngx-link-preview-container {
+   margin-bottom: 5px;
+
+   .og-link-preview {
+      //margin-top: 5px;
+      border-radius: 4px;
+      background-color: rgba(200, 200, 200, 0.25);
+
+      &:hover {
+         background-color: rgba(200, 200, 200, 0.4);
+         //cursor: pointer;
+      }
+
+      .row {
+         display: flex;
+         flex-direction: row;
+         align-items: center;
+         justify-content: flex-start;
+
+         // Remove browser link defaults
+         text-decoration: none;
+         color: unset;
+         user-select: none;
+
+         .col {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            justify-content: flex-start;
+            // Hide bg in normal theme
+            background-position:-9999px;
+            background-repeat: no-repeat;
+
+            &.preview-image {
+               padding: 5px 0 5px 5px;
+               margin-right: 6px;
+            }
+            &.text-data {
+               padding: 6px 6px 4px 0;
+            }
+
+            .image {
+               border-radius: 3px;
+
+               img {
+                  max-height: 70px;
+                  height: 13vw;
+                  border-radius: 3px;
+               }
+            }
+
+            .title {
+               font-weight: 500;
+               font-size: 14px;
+            }
+
+            .description {
+               margin-top: 4px;
+               //max-height: 52px; // 4 lines
+               max-height: 40px; // 3 lines
+               font-size: 12px;
+               filter: contrast(0.8);
+               overflow: hidden;
+               text-overflow: ellipsis;
+            }
+
+            .header {
+               display: flex;
+               flex-direction: row;
+               align-items: center;
+               margin-bottom: 4px;
+               font-size: 12px;
+               filter: contrast(0.7);
+
+               .site-name {
+               }
+            }
+
+            .footer {
+               display: flex;
+               flex-direction: row;
+               align-items: center;
+               font-size: 12px;
+               filter: contrast(0.7);
+               margin-top: 4px;
+
+               .url {
+               }
+            }
+         }
+      }
+   }
+}
+
+
+// Modern theme
+:host.modern {
+   .og-link-preview {
+      .row {
+         align-items: stretch;
+      }
+
+      .col {
+         justify-content: center !important;
+      }
+
+      .image {
+         width: 150px;
+
+         // Hide img in modern theme, use col.preview-image background instead
+         img {
+            opacity: 0;
+         }
+      }
+
+      .col.preview-image {
+         background-size: cover;
+         background-position: center center !important;
+         border-bottom-left-radius: 4px;
+         border-top-left-radius: 4px;
+      }
+   }
+}

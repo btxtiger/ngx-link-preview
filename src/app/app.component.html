@@ -1,0 +1,50 @@
+<h1>ngx-link-preview</h1>
+
+<div class="wrapper {{ color }}" *ngFor="let color of colors">
+   <ng-container *ngFor="let theme of ['default', 'modern']; let i=index">
+      <ng-container *ngIf="color === ''">
+         <b *ngIf="i === 0">Default config</b>
+         <ngx-link-preview [useCache]="false"
+                           class="{{ theme }}"
+                           apiRoute="demo"
+                           [links]="links"
+                           (previewClick)="previewClick($event)"
+                           [getApiEndpoint$]="apiCallbackFn"></ngx-link-preview>
+      </ng-container>
+      <ng-container *ngIf="color === 'blue'">
+         <b *ngIf="i === 0">Full data (default + link)</b>
+         <ngx-link-preview [useCache]="false"
+                           class="{{ theme }}"
+                           apiRoute="demo"
+                           [showLinkUrl]="true"
+                           [links]="links"
+                           (previewClick)="previewClick($event)"
+                           [getApiEndpoint$]="apiCallbackFn"></ngx-link-preview>
+      </ng-container>
+      <ng-container *ngIf="color === 'teal'">
+         <b *ngIf="i === 0">Individual (default - description)</b>
+         <ngx-link-preview [useCache]="false"
+                           class="{{ theme }}"
+                           apiRoute="demo"
+                           [showDescription]="false"
+                           [links]="links"
+                           (previewClick)="previewClick($event)"
+                           [getApiEndpoint$]="apiCallbackFn"></ngx-link-preview>
+      </ng-container>
+      <ng-container *ngIf="color === 'amber'">
+         <b *ngIf="i === 0">Individual (default - description + link)</b>
+         <ngx-link-preview [useCache]="false"
+                           class="{{ theme }}"
+                           apiRoute="demo"
+                           [showDescription]="false"
+                           [showLinkUrl]="true"
+                           [links]="links"
+                           (previewClick)="previewClick($event)"
+                           [getApiEndpoint$]="apiCallbackFn"></ngx-link-preview>
+      </ng-container>
+
+   </ng-container>
+</div>
+
+<router-outlet></router-outlet>
+

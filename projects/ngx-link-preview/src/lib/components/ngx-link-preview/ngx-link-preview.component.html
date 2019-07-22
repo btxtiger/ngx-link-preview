@@ -1,0 +1,40 @@
+<div class="ngx-link-preview-container">
+
+   <ng-container *ngFor="let p of previews">
+
+      <div class="og-link-preview" *ngIf="p.url" (click)="onLinkClick(p.url)">
+         <a class="row" [href]="p.url" (click)="disableDefaultLink($event)">
+
+            <div class="col preview-image" [ngStyle]="{backgroundImage: 'url('+getSanitizedImageUrl(p)+')'}">
+               <div class="image" *ngIf="showImage && (p['og:image'] || p.image)">
+                  <img [src]="getSanitizedImageUrl(p)" alt="">
+               </div>
+            </div>
+
+            <div class="col text-data">
+               <div class="header" *ngIf="showSiteName">
+                  <div class="site-name" *ngIf="p['og:site_name']">
+                     {{ p['og:site_name'] }}
+                  </div>
+               </div>
+
+               <div class="title" *ngIf="showTitle && (p['og:title'] || p.title)">
+                  {{ p['og:title'] || p.title }}
+               </div>
+
+               <div class="description" *ngIf="showDescription && (p['og:description'] || p.description)">
+                  {{ p['og:description'] || p.description }}
+               </div>
+
+               <div class="footer">
+                  <div class="url" *ngIf="showLinkUrl && (p['og:url'] || p.url)">
+                     {{ p['og:url'] || p.url }}
+                  </div>
+               </div>
+            </div>
+
+         </a><!-- a.row -->
+      </div><!-- og-link-preview -->
+
+   </ng-container><!-- *ngFor -->
+</div>

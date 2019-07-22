@@ -1,0 +1,11 @@
+{
+   "name": "ngx-link-preview",
+   "version": "1.0.0",
+   "description": "The Open Graph link preview component for Angular",
+   "author": "Jonas Gnioui <btxtiger@outlook.com>",
+   "license": "MIT",
+   "peerDependencies": {
+      "@angular/common": "^8.0.3",
+      "@angular/core": "^8.0.3"
+   }
+}
