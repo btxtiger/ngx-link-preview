@@ -41,7 +41,7 @@ export class AppComponent {
       // return this.http.get(route);
 
       // Hard code for demo purposes:
-      return this.http.get('/assets/open-graph-test/casa-de-papel.json');
+      return this.http.get('/assets/open-graph-test/medium-angular.json');
    };
 
    constructor(private http: HttpClient) {}
