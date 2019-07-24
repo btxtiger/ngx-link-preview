@@ -9,8 +9,4 @@ import { NgxLinkPreviewCacheService } from './services/ngx-link-preview-cache.se
    imports: [CommonModule],
    providers: [NgxLinkPreviewCacheService]
 })
-
-/**
- * @publicApi
- */
 export class NgxLinkPreviewModule {}
