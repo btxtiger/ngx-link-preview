@@ -9,7 +9,9 @@
                            apiRoute="demo"
                            [links]="links"
                            (previewClick)="previewClick($event)"
-                           [getApiEndpoint$]="apiCallbackFn"></ngx-link-preview>
+                           [getApiEndpoint$]="apiCallbackFn">
+            <h2>Here can be your custom loading spinner</h2>
+         </ngx-link-preview>
       </ng-container>
       <ng-container *ngIf="color === 'blue'">
          <b *ngIf="i === 0">Full data (default + link)</b>

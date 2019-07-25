@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { delay } from 'rxjs/operators';
 
 @Component({
    selector: 'app-root',
@@ -41,7 +42,7 @@ export class AppComponent {
       // return this.http.get(route);
 
       // Hard code for demo purposes:
-      return this.http.get('/assets/open-graph-test/medium-angular.json');
+      return this.http.get('/assets/open-graph-test/medium-angular.json').pipe(delay(2500));
    };
 
    constructor(private http: HttpClient) {}
