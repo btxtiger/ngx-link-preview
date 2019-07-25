@@ -1,27 +1,243 @@
-# NgxLinkPreviewDemo
+# ngx-link-preview
+[![npm](https://img.shields.io/npm/v/ngx-link-preview.svg)](https://www.npmjs.com/package/ngx-link-preview)
+[![npm](https://img.shields.io/npm/dm/ngx-link-preview.svg)](https://www.npmjs.com/package/ngx-link-preview)
+### The Open Graph link preview component for Angular
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 8.0.0.
 
-## Development server
+### Installation
+```sh
+npm install --save ngx-link-preview
+```
+```sh
+yarn add ngx-link-preview
+```
+![](assets/link-preview-2.png)
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+### Features
+- Configurable preview
+- Render array of links
+- Parse links in string
+- Loading indicator
+- Theming, `default` and `modern` theme included
 
-## Code scaffolding
+### Requirements
+- You will need to create an endpoint at your backend to parse an url for meta tags.
+[See info below](#endpoint)
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+### Component configuration
+1. Import to your module
+```ts
+@NgModule({
+   imports: [
+      NgxLinkPreviewModule,
+      ...
+   ]
+})
+export class AppModule { }
+```
 
-## Build
+2. Use as regular component
+```html
+<ngx-link-preview></ngx-link-preview>
+```
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
+3. Parameters: Configure the preview
+- Two **required** parameters:
+    1. `[apiRoute]="myApiRoute"`  
+    __apiRoute__ accepts any url, where you want to retrieve the metadata from. The 
+    target url will be attached as base64 urlencoded query parameter. 
+    ```ts
+    /** API route where to get the meta data from, component will build the full request url
+     * Schema: api.example.com/api/get-meta-data?url=d3d3LmV4YW1wbGUuY29t
+     */
+    @Input()
+    public apiRoute: string;
+    ```
+    
+    2. `[getApiEndpoint$]="apiCallbackFn"`
+    A generic callback function that returns an observable, that runs the api request on subscription.
+    You can use the default httpClient method, or your configured backend wrapper observable.
+    ```ts
+    /** Method that does the API request, provide as class member arrow function from parent */
+    @Input()
+    public getApiEndpoint$: (requestUrl: string) => Observable<any>;
+    ```
+    For example: 
+    ```ts
+     public apiCallbackFn = (route: string) => {
+          return this.http.get(route);
+       };
+    ```
+- **Optional** parameters
+##### Links that should be rendered, default: `[]`'
+```ts
+/** Plain links string array */
+@Input()
+public links: string[] = [];
+````
 
-## Running unit tests
+##### Input string that should be parsed for links, can be combined with `links[]
+```ts
+/** Input string to parse for links */
+@Input()
+public parseForLinksStr: string;
+```
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+##### Query parameter name, default: `'url'`
+```ts
+/** Target url will be attached as encodeURI(btoa(url)), so it must be decoded on the server */
+@Input()
+public queryParamName = 'url';
+```
 
-## Running end-to-end tests
+##### Show image in preview, default: `true`
+```ts
+/** boolean: show image in preview */
+@Input()
+public showImage = true;
+```
 
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
+##### Show site name in preview, default: `true`
+```ts
+/** boolean: show site name in preview */
+@Input()
+public showSiteName = true;
+```
 
-## Further help
+##### Show title in preview, default: `true`
+```ts
+/** boolean: show title in preview */
+@Input()
+public showTitle = true;
+```
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+##### Show description in preview, default: `true`
+```ts
+/** boolean: show description in preview */
+@Input()
+public showDescription = true;
+```
+
+##### Show url in preview, default: `false`
+```ts
+/** boolean: show link url in preview */
+@Input()
+public showLinkUrl = false;
+```
+
+##### Use cache, default: `true`
+```ts
+/** boolean: use cache to display previews faster on next rendering */
+@Input()
+public useCache = true;
+```
+
+##### Show loading indicator, default: `true`
+```ts
+/** boolean: show loading indicator */
+@Input()
+public showLoadingIndicator = true;
+```
+
+##### Event emits url on click
+```ts
+/** Event emitter: on click to handle the click event */
+@Output()
+public previewClick = new EventEmitter();
+```
+```html
+<!-- $event: string is linkUrl --> 
+(previewClick)="previewClick($event)"
+```
+
+### Theming
+The package ships a default and a modern theme. The modern theme crops the preview image, what
+might conclude in unintended results. To use the modern theme, just pass the css class:
+```html
+<ngx-link-preview class="modern"></ngx-link-preview>
+```
+** Feel free to create more themes and submit a pull request or open an issue! **  
+You can use this skeleton:
+```scss
+.ngx-link-preview-container {
+   .og-link-preview {
+      &:hover {
+      }
+      .row {
+         .col {
+            &.preview-image {
+            }
+            &.text-data {
+            }
+            .image {
+               img {
+               }
+            }
+            .title {
+            }
+            .description {
+            }
+            .header {
+               .site-name {
+               }
+            }
+            .footer {
+               .url {
+               }
+            }
+         }
+      }
+   }
+}
+```
+
+### Loading spinner
+You can customize the loading spinner by passing your spinner as content of the component:
+```html
+<ngx-link-preview>
+    <my-spinner-component></my-spinner-component>
+</ngx-link-preview>
+
+<!-- or alternatively: -->
+<ngx-link-preview>
+    <div class="spinner"></div>
+</ngx-link-preview>
+```
+
+<a name="endpoint"></a>
+### Endpoint configuration
+**Node.js example**  
+With node.js you can use [url-metadata](https://github.com/LevelNewsOrg/url-metadata#readme)
+```ts
+import urlMetadata from 'url-metadata';
+
+public getMetadata(request: Request, response: Response) {
+   let { url } = request.query;
+   url = this.decodeSafeUrl(url);
+   
+   urlMetadata(url).then(
+      resp => {
+         response.send(resp);
+      },
+      error => {
+         response.send(error).status(500);
+      }
+   );
+}
+
+public decodeSafeUrl(value: string): string {
+   const valueBase64 = decodeURI(value);
+   return Buffer.from(valueBase64, 'base64').toString('utf8');
+}
+```
+**PHP example**   
+PHP has a builtin method to get the meta tags
+```php
+$router->get('/meta-tags', function() {
+   $url = $_GET['url'];
+   $urlDecoded = base64_decode(urldecode($url));
+   return response()->json(get_meta_tags($urlDecoded));
+});
+```
+
+![](assets/link-preview-1.png)

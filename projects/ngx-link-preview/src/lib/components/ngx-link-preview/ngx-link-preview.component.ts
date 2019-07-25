@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, OnChanges, OnDestroy, Output, SimpleChanges } from '@angular/core';
 import { OpenGraphMetaData } from '../../interfaces/open-graph-meta-data';
 import { NgxLinkPreviewCacheService } from '../../services/ngx-link-preview-cache.service';
-import { Observable, Subscription } from 'rxjs';
+import { Observable, Subject, Subscription } from 'rxjs';
 import { NgxLinkPreviewLoadingSpinner } from './ngx-link-preview-loading-spinner';
 import { DomSanitizer } from '@angular/platform-browser';
 import { NgxLinkPreviewLoadingManager } from '../../services/ngx-link-preview-loading.manager';
@@ -24,8 +24,8 @@ export class NgxLinkPreviewComponent implements OnChanges, OnDestroy {
    @Input()
    public getApiEndpoint$: (requestUrl: string) => Observable<any>;
 
-   /** API route where to get the meta data from, component will build the request url
-    * Schema: api.example.com/api/get-meta-data?url=www.example.com
+   /** API route where to get the meta data from, component will build the full request url
+    * Schema: api.example.com/api/get-meta-data?url=d3d3LmV4YW1wbGUuY29t
     */
    @Input()
    public apiRoute: string;
@@ -54,7 +54,7 @@ export class NgxLinkPreviewComponent implements OnChanges, OnDestroy {
    @Input()
    public showLinkUrl = false;
 
-   /** boolean: use cache to display links faster after on next rendering */
+   /** boolean: use cache to display previews faster on next rendering */
    @Input()
    public useCache = true;
 

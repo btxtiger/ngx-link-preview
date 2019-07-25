@@ -34,8 +34,8 @@ export class AppComponent {
    public colors = [
       '',
       'blue',
-      'teal',
-      'amber'
+      'amber',
+      'teal'
    ];
 
    public apiCallbackFn = route => {
