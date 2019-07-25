@@ -93,6 +93,19 @@
    }
 }
 
+.loading-spinner {
+   .wrapper-custom {
+      text-align: center;
+   }
+   .wrapper-default {
+      height: 40px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      filter: brightness(0.5);
+   }
+}
+
 
 // Modern theme
 :host.modern {

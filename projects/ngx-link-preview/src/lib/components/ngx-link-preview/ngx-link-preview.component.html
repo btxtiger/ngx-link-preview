@@ -38,3 +38,17 @@
 
    </ng-container><!-- *ngFor -->
 </div>
+
+<div class="loading-spinner" *ngIf="showLoadingIndicator && showLoadingSpinner">
+   <!-- Custom loading spinner -->
+   <ng-container>
+      <div class="wrapper-custom" #ngContentLoading>
+         <ng-content></ng-content>
+      </div>
+   </ng-container>
+
+   <!-- Default loading spinner -->
+   <ng-container *ngIf="ngContentLoading.childNodes.length === 0">
+      <div class="wrapper-default" [innerHTML]="loadingSpinner"></div>
+   </ng-container>
+</div>

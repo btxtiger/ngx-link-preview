@@ -1,14 +1,17 @@
-import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, OnDestroy, Output, SimpleChanges } from '@angular/core';
 import { OpenGraphMetaData } from '../../interfaces/open-graph-meta-data';
 import { NgxLinkPreviewCacheService } from '../../services/ngx-link-preview-cache.service';
-import { Observable } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
+import { NgxLinkPreviewLoadingSpinner } from './ngx-link-preview-loading-spinner';
+import { DomSanitizer } from '@angular/platform-browser';
+import { NgxLinkPreviewLoadingManager } from '../../services/ngx-link-preview-loading.manager';
 
 @Component({
    selector: 'ngx-link-preview',
    templateUrl: './ngx-link-preview.component.html',
    styleUrls: ['./ngx-link-preview.component.scss']
 })
-export class NgxLinkPreviewComponent implements OnChanges {
+export class NgxLinkPreviewComponent implements OnChanges, OnDestroy {
    /** Plain links string array */
    @Input()
    public links: string[] = [];
@@ -55,6 +58,10 @@ export class NgxLinkPreviewComponent implements OnChanges {
    @Input()
    public useCache = true;
 
+   /** boolean: show loading indicator */
+   @Input()
+   public showLoadingIndicator = true;
+
    /** Event emitter: on click to handle the click event */
    @Output()
    public previewClick = new EventEmitter();
@@ -65,7 +72,23 @@ export class NgxLinkPreviewComponent implements OnChanges {
    /** Array of metadata objects where the preview is rendered from */
    public previews: OpenGraphMetaData[] = [];
 
-   constructor(private cacheSvc: NgxLinkPreviewCacheService) {}
+   private loadingMgr = new NgxLinkPreviewLoadingManager();
+   public loadingSpinner = this.sanitizer.bypassSecurityTrustHtml(NgxLinkPreviewLoadingSpinner);
+   public showLoadingSpinner = false;
+   public loadingSubscription: Subscription;
+
+   constructor(
+      private sanitizer: DomSanitizer,
+      private cacheSvc: NgxLinkPreviewCacheService
+   ) {
+      this.loadingSubscription = this.loadingMgr.hasPendingJobs$.subscribe(hasJobs => {
+         this.showLoadingSpinner = hasJobs;
+      });
+   }
+
+   ngOnDestroy(): void {
+      this.loadingSubscription.unsubscribe();
+   }
 
    /**
     * Preview will be refreshed every time a change is recognized
@@ -77,7 +100,7 @@ export class NgxLinkPreviewComponent implements OnChanges {
    /**
     * Init preview
     */
-   private init() {
+   private init(): void {
       this.scannedLinks = [];
       this.previews = [];
       this.checkInputParameters();
@@ -99,8 +122,10 @@ export class NgxLinkPreviewComponent implements OnChanges {
          if (this.useCache && this.cacheSvc.getCacheItem(encodedLink)) {
             this.previews.push(this.cacheSvc.getCacheItem(encodedLink));
          } else {
+            this.loadingMgr.addTask(encodedLink);
             this.getApiEndpoint$(requestUrl).subscribe((resp: OpenGraphMetaData) => {
                this.cacheSvc.updateCacheItem(encodedLink, resp);
+               this.loadingMgr.removeTask(encodedLink);
                this.previews.push(resp);
             });
          }
