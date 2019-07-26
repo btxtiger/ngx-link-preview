@@ -12,7 +12,7 @@
       "test": "ng test",
       "lint": "ng lint",
       "e2e": "ng e2e",
-      "deploy": "ng build ngx-link-preview && cd dist/ngx-link-preview && npm publish"
+      "deploy": "sh deploy.sh"
    },
    "dependencies": {
       "@angular/animations": "~8.0.0",
