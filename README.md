@@ -11,7 +11,7 @@ npm install --save ngx-link-preview
 ```sh
 yarn add ngx-link-preview
 ```
-![](assets/link-preview-2.png)
+![](https://raw.githubusercontent.com/btxtiger/ngx-link-preview/master/src/assets/link-preview-2.png)
 
 ### Features
 - Configurable preview
@@ -25,7 +25,7 @@ yarn add ngx-link-preview
 [See info below](#endpoint)
 
 ### Component configuration
-1. Import to your module
+#### 1. Import to your module
 ```ts
 @NgModule({
    imports: [
@@ -36,39 +36,40 @@ yarn add ngx-link-preview
 export class AppModule { }
 ```
 
-2. Use as regular component
+#### 2. Use as regular component
 ```html
 <ngx-link-preview></ngx-link-preview>
 ```
 
-3. Parameters: Configure the preview
-- Two **required** parameters:
-    1. `[apiRoute]="myApiRoute"`  
-    __apiRoute__ accepts any url, where you want to retrieve the metadata from. The 
-    target url will be attached as base64 urlencoded query parameter. 
-    ```ts
-    /** API route where to get the meta data from, component will build the full request url
-     * Schema: api.example.com/api/get-meta-data?url=d3d3LmV4YW1wbGUuY29t
-     */
-    @Input()
-    public apiRoute: string;
-    ```
-    
-    2. `[getApiEndpoint$]="apiCallbackFn"`   
-    A generic callback function that returns an observable, that runs the api request on subscription.
-    You can use the default httpClient method, or your configured backend wrapper observable.
-    ```ts
-    /** Method that does the API request, provide as class member arrow function from parent */
-    @Input()
-    public getApiEndpoint$: (requestUrl: string) => Observable<any>;
-    ```
-    For example: 
-    ```ts
-     public apiCallbackFn = (route: string) => {
-          return this.http.get(route);
-       };
-    ```
-- **Optional** parameters
+#### 3. Parameters: Configure the preview
+#### • Two **required** parameters:
+##### 1. `[apiRoute]="myApiRoute"`  
+_apiRoute_ accepts any url, where you want to retrieve the metadata from. The 
+target url will be attached as base64 urlencoded query parameter. 
+```ts
+/** API route where to get the meta data from, component will build the full request url
+ * Schema: api.example.com/api/get-meta-data?url=d3d3LmV4YW1wbGUuY29t
+ */
+@Input()
+public apiRoute: string;
+```
+
+##### 2. `[getApiEndpoint$]="apiCallbackFn"`   
+A generic callback function that returns an observable, that runs the api request on subscription.
+You can use the default httpClient method, or your configured backend wrapper observable.
+```ts
+/** Method that does the API request, provide as class member arrow function from parent */
+@Input()
+public getApiEndpoint$: (requestUrl: string) => Observable<any>;
+```
+
+For example: 
+```ts
+public apiCallbackFn = (route: string) => {
+   return this.http.get(route);
+};
+```
+#### • **Optional** parameters
 ##### • Links that should be rendered, default: `[]`'
 ```ts
 /** Plain links string array */
@@ -183,9 +184,10 @@ might conclude in unintended results. To use the modern theme, just pass the css
 ```html
 <ngx-link-preview class="modern"></ngx-link-preview>
 ```
-** Feel free to create more themes and submit a pull request or open an issue! **
+**Feel free to create more themes and submit a pull request or open an issue!**
 <details><summary>You can use this skeleton:</summary>
 <p>
+
 ```scss
 .ngx-link-preview-container {
    .og-link-preview {
@@ -218,6 +220,7 @@ might conclude in unintended results. To use the modern theme, just pass the css
    }
 }
 ```
+
 </p>
 </details>
 
@@ -238,7 +241,7 @@ You can customize the loading spinner by passing your spinner as content of the 
 <a name="endpoint"></a>
 ### Endpoint configuration
 #### Node.js example  
-With node.js you can use [url-metadata](https://github.com/LevelNewsOrg/url-metadata#readme)
+With node.js you can use [url-metadata](https://github.com/LevelNewsOrg/url-metadata)
 ```ts
 import urlMetadata from 'url-metadata';
 
@@ -271,4 +274,4 @@ $router->get('/meta-tags', function() {
 });
 ```
 
-![](assets/link-preview-1.png)
+![](https://raw.githubusercontent.com/btxtiger/ngx-link-preview/master/src/assets/link-preview-1.png)
