@@ -5,6 +5,16 @@
    "author": "Jonas Gnioui <btxtiger@outlook.com>",
    "license": "MIT",
    "private": true,
+   "repository": {
+      "type": "git",
+      "url": "https://github.com/btxtiger/ngx-link-preview"
+   },
+   "keywords": [
+      "angular",
+      "angular-component",
+      "opengraph",
+      "link-preview"
+   ],
    "scripts": {
       "ng": "ng",
       "start": "ng serve",
