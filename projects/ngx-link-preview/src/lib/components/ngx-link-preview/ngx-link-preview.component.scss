@@ -1,14 +1,10 @@
 .ngx-link-preview-container {
-   margin-bottom: 5px;
-
    .og-link-preview {
-      //margin-top: 5px;
       border-radius: 4px;
       background-color: rgba(200, 200, 200, 0.25);
 
       &:hover {
          background-color: rgba(200, 200, 200, 0.4);
-         //cursor: pointer;
       }
 
       .row {
@@ -28,7 +24,7 @@
             align-items: flex-start;
             justify-content: flex-start;
             // Hide bg in normal theme
-            background-position:-9999px;
+            background-position: -9999px;
             background-repeat: no-repeat;
 
             &.preview-image {
@@ -105,7 +101,6 @@
       filter: brightness(0.5);
    }
 }
-
 
 // Modern theme
 :host.modern {
