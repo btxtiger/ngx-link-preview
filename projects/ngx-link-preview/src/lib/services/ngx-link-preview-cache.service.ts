@@ -6,7 +6,7 @@ export class NgxLinkPreviewCacheService {
    private cache = {};
 
    /** localStorage cache key */
-   private localStorageKey = 'OgLinkPreviewCache_q16qy4aOCzmz';
+   private localStorageKey = 'NgxLinkPreviewCache_q16qy4aOCzm2';
 
    constructor() {
       this.loadCacheFromLocalStorage();

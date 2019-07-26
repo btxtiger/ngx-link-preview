@@ -1,45 +1,44 @@
 <div class="wrapper {{ color }}" *ngFor="let color of colors">
    <ng-container *ngFor="let theme of ['default', 'modern']; let i=index">
       <ng-container *ngIf="color === ''">
-         <b *ngIf="i === 0">Default config</b>
-         <ngx-link-preview [useCache]="false"
-                           class="{{ theme }}"
+         <b *ngIf="i === 0">Default config, use cache</b>
+         <ngx-link-preview class="{{ theme }}"
                            apiRoute="demo"
                            [links]="links"
-                           (previewClick)="previewClick($event)"
+                           (previewClicked)="previewClick($event)"
                            [getApiEndpoint$]="apiCallbackFn">
             <h2>Here can be your custom loading spinner</h2>
          </ngx-link-preview>
       </ng-container>
       <ng-container *ngIf="color === 'blue'">
-         <b *ngIf="i === 0">Full data (default + link)</b>
-         <ngx-link-preview [useCache]="false"
+         <b *ngIf="i === 0">Full data (default + link), use cache max. 10s</b>
+         <ngx-link-preview [maxCacheAgeMs]="1000*10"
                            class="{{ theme }}"
                            apiRoute="demo"
                            [showLinkUrl]="true"
                            [links]="links"
-                           (previewClick)="previewClick($event)"
+                           (previewClicked)="previewClick($event)"
                            [getApiEndpoint$]="apiCallbackFn"></ngx-link-preview>
       </ng-container>
       <ng-container *ngIf="color === 'teal'">
-         <b *ngIf="i === 0">Individual (default - description)</b>
+         <b *ngIf="i === 0">Individual (default - description), no cache</b>
          <ngx-link-preview [useCache]="false"
                            class="{{ theme }}"
                            apiRoute="demo"
                            [showDescription]="false"
                            [links]="links"
-                           (previewClick)="previewClick($event)"
+                           (previewClicked)="previewClick($event)"
                            [getApiEndpoint$]="apiCallbackFn"></ngx-link-preview>
       </ng-container>
       <ng-container *ngIf="color === 'amber'">
-         <b *ngIf="i === 0">Individual (default - description + link)</b>
+         <b *ngIf="i === 0">Individual (default - description + link), no cache</b>
          <ngx-link-preview [useCache]="false"
                            class="{{ theme }}"
                            apiRoute="demo"
                            [showDescription]="false"
                            [showLinkUrl]="true"
                            [links]="links"
-                           (previewClick)="previewClick($event)"
+                           (previewClicked)="previewClick($event)"
                            [getApiEndpoint$]="apiCallbackFn"></ngx-link-preview>
       </ng-container>
 

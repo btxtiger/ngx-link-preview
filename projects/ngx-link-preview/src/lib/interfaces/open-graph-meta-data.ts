@@ -23,4 +23,5 @@ export interface OpenGraphMetaData {
    price: string;
    priceCurrency: string;
    availability: string;
+   timestampMs: number;
 }

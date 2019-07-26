@@ -5,6 +5,10 @@ import { Observable, Subject, Subscription } from 'rxjs';
 import { NgxLinkPreviewLoadingSpinner } from './ngx-link-preview-loading-spinner';
 import { DomSanitizer } from '@angular/platform-browser';
 import { NgxLinkPreviewLoadingManager } from '../../services/ngx-link-preview-loading.manager';
+import { map } from 'rxjs/operators';
+
+type HtmlLinkTarget = '_blank' | '_self' | '_parent' | '_top' | FrameName;
+type FrameName = string;
 
 @Component({
    selector: 'ngx-link-preview',
@@ -58,13 +62,31 @@ export class NgxLinkPreviewComponent implements OnChanges, OnDestroy {
    @Input()
    public useCache = true;
 
+   /** number: max age the data cache of a link preview should be used */
+   @Input()
+   public maxCacheAgeMs = 1000 * 60 * 60 * 24 * 7; // 7 days
+
    /** boolean: show loading indicator */
    @Input()
    public showLoadingIndicator = true;
 
-   /** Event emitter: on click to handle the click event */
+   /**
+    * boolean: whether the <a href="..."></a> link should be clickable.
+    * This is a question of context security. Otherwise use (previewClick) event.
+    */
+   @Input()
+   public useHtmlLinkDefaultClickEvent = false;
+
+   /**
+    * HtmlLinkTarget: where the HTML link should be opened on click.
+    * Only has an effect if [useHtmlLinkDefaultClickEvent]="true"
+    */
+   @Input()
+   public htmlLinkTarget: HtmlLinkTarget = '_blank';
+
+   /** Event emitter: on click to handle the click event, emits the clicked URL */
    @Output()
-   public previewClick = new EventEmitter();
+   public previewClicked = new EventEmitter<string>();
 
    /** Scanned links[] from @Input() links & @Input() parseForLinks */
    private scannedLinks: string[] = [];
@@ -75,19 +97,15 @@ export class NgxLinkPreviewComponent implements OnChanges, OnDestroy {
    private loadingMgr = new NgxLinkPreviewLoadingManager();
    public loadingSpinner = this.sanitizer.bypassSecurityTrustHtml(NgxLinkPreviewLoadingSpinner);
    public showLoadingSpinner = false;
-   public loadingSubscription: Subscription;
 
-   constructor(
-      private sanitizer: DomSanitizer,
-      private cacheSvc: NgxLinkPreviewCacheService
-   ) {
-      this.loadingSubscription = this.loadingMgr.hasPendingJobs$.subscribe(hasJobs => {
-         this.showLoadingSpinner = hasJobs;
-      });
+   private subscriptions: Subscription[] = [];
+
+   constructor(private sanitizer: DomSanitizer, private cacheSvc: NgxLinkPreviewCacheService) {
+      this.subscribeLoadingMgrHasJobs();
    }
 
    ngOnDestroy(): void {
-      this.loadingSubscription.unsubscribe();
+      this.unsubscribeAll();
    }
 
    /**
@@ -98,6 +116,26 @@ export class NgxLinkPreviewComponent implements OnChanges, OnDestroy {
    }
 
    /**
+    * Subscribe to loading manager has jobs stream
+    */
+   private subscribeLoadingMgrHasJobs(): void {
+      this.subscriptions.push(
+         this.loadingMgr.hasPendingJobs$.subscribe(hasJobs => {
+            this.showLoadingSpinner = hasJobs;
+         })
+      );
+   }
+
+   /**
+    * Unsubscribe all subscriptions
+    */
+   private unsubscribeAll(): void {
+      this.subscriptions.forEach((sub: Subscription) => {
+         sub.unsubscribe();
+      });
+   }
+
+   /**
     * Init preview
     */
    private init(): void {
@@ -105,41 +143,69 @@ export class NgxLinkPreviewComponent implements OnChanges, OnDestroy {
       this.previews = [];
       this.checkInputParameters();
 
+      // Find links in string
       if (this.parseForLinksStr) {
          // Parse for links and push to links
          const links = this.parseStringForLinks(this.parseForLinksStr);
          this.scannedLinks = this.scannedLinks.concat(links);
       }
+      // Add links passed as string[]
       if (this.links && this.links.length) {
          this.scannedLinks = this.scannedLinks.concat(this.links);
       }
 
       for (const link of this.scannedLinks) {
-         const encodedLink = this.encodeUrlSafe(link);
-         const requestUrl = this.apiRoute + '?' + this.queryParamName + '=' + encodedLink;
+         this.loadCacheOrGet(link);
+      }
+   }
 
-         // Try to load from cache, use encodedLink as key
-         if (this.useCache && this.cacheSvc.getCacheItem(encodedLink)) {
-            this.previews.push(this.cacheSvc.getCacheItem(encodedLink));
-         } else {
-            this.loadingMgr.addTask(encodedLink);
-            this.getApiEndpoint$(requestUrl).subscribe((resp: OpenGraphMetaData) => {
+   /**
+    * Load cache or get from api
+    */
+   private loadCacheOrGet(link: string): void {
+      const encodedLink = this.encodeUrlSafe(link);
+      const requestUrl = this.apiRoute + '?' + this.queryParamName + '=' + encodedLink;
+
+      // Try to load from cache, use encodedLink as key
+      const cacheItem = this.cacheSvc.getCacheItem(encodedLink);
+      if (this.useCache && cacheItem && !this.isCacheOutdated(cacheItem)) {
+         this.previews.push(cacheItem);
+      } else {
+         this.loadingMgr.addTask(encodedLink);
+         this.getApiEndpoint$(requestUrl)
+            .pipe(
+               map((resp: OpenGraphMetaData) => {
+                  resp.timestampMs = new Date().valueOf();
+                  return resp;
+               })
+            )
+            .subscribe((resp: OpenGraphMetaData) => {
                this.cacheSvc.updateCacheItem(encodedLink, resp);
                this.loadingMgr.removeTask(encodedLink);
                this.previews.push(resp);
             });
-         }
       }
+   }
+
+   /**
+    * Check if cache item is outdated by max-cache-age
+    */
+   private isCacheOutdated(item: OpenGraphMetaData): boolean {
+      const now = new Date().valueOf();
+      const maxValidTimestamp = now - this.maxCacheAgeMs;
+      return maxValidTimestamp > item.timestampMs;
    }
 
    /**
     * On link click emit to EventEmitter
     */
    public onLinkClick(url: string): void {
-      this.previewClick.emit(url);
+      this.previewClicked.emit(url);
    }
    public disableDefaultLink(event: MouseEvent): void {
-      event.preventDefault();
+      if (!this.useHtmlLinkDefaultClickEvent) {
+         event.preventDefault();
+      }
    }
 
    /**

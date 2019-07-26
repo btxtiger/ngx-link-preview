@@ -18,10 +18,10 @@ yarn add ngx-link-preview
 - Render array of links
 - Parse links in string
 - Loading indicator
-- Theming, `default` and `modern` theme included
+- Theming: `default` and `modern` theme included
 
 ### Requirements
-- You will need to create an endpoint at your backend to parse an url for meta tags.
+- You will need to create an endpoint at your backend to parse an url for meta tags.   
 [See info below](#endpoint)
 
 ### Component configuration
@@ -54,7 +54,7 @@ export class AppModule { }
     public apiRoute: string;
     ```
     
-    2. `[getApiEndpoint$]="apiCallbackFn"`
+    2. `[getApiEndpoint$]="apiCallbackFn"`   
     A generic callback function that returns an observable, that runs the api request on subscription.
     You can use the default httpClient method, or your configured backend wrapper observable.
     ```ts
@@ -69,85 +69,112 @@ export class AppModule { }
        };
     ```
 - **Optional** parameters
-##### Links that should be rendered, default: `[]`'
+##### • Links that should be rendered, default: `[]`'
 ```ts
 /** Plain links string array */
 @Input()
 public links: string[] = [];
 ````
 
-##### Input string that should be parsed for links, can be combined with `links[]
+##### • Input string that should be parsed for links, can be combined with `links[]
 ```ts
 /** Input string to parse for links */
 @Input()
 public parseForLinksStr: string;
 ```
 
-##### Query parameter name, default: `'url'`
+##### • Query parameter name, default: `'url'`
 ```ts
 /** Target url will be attached as encodeURI(btoa(url)), so it must be decoded on the server */
 @Input()
 public queryParamName = 'url';
 ```
 
-##### Show image in preview, default: `true`
+##### • Show image in preview, default: `true`
 ```ts
 /** boolean: show image in preview */
 @Input()
 public showImage = true;
 ```
 
-##### Show site name in preview, default: `true`
+##### • Show site name in preview, default: `true`
 ```ts
 /** boolean: show site name in preview */
 @Input()
 public showSiteName = true;
 ```
 
-##### Show title in preview, default: `true`
+##### • Show title in preview, default: `true`
 ```ts
 /** boolean: show title in preview */
 @Input()
 public showTitle = true;
 ```
 
-##### Show description in preview, default: `true`
+##### • Show description in preview, default: `true`
 ```ts
 /** boolean: show description in preview */
 @Input()
 public showDescription = true;
 ```
 
-##### Show url in preview, default: `false`
+##### • Show url in preview, default: `false`
 ```ts
 /** boolean: show link url in preview */
 @Input()
 public showLinkUrl = false;
 ```
 
-##### Use cache, default: `true`
+##### • Use cache, default: `true`
 ```ts
 /** boolean: use cache to display previews faster on next rendering */
 @Input()
 public useCache = true;
 ```
 
-##### Show loading indicator, default: `true`
+##### • Max cache age in milliseconds, default: `7 days`
+```ts
+/** number: max age the data cache of a link preview should be used */
+@Input()
+public maxCacheAgeMs = 1000 * 60 * 60 * 24 * 7; // 7 days
+```
+
+##### • Show loading indicator, default: `true`
 ```ts
 /** boolean: show loading indicator */
 @Input()
 public showLoadingIndicator = true;
 ```
 
-##### Event emits url on click
+##### • HTML link `<a href="..."></a>` should be clickable, default: `false` 
 ```ts
-/** Event emitter: on click to handle the click event */
+/**
+* boolean: whether the <a href="..."></a> link should be clickable.
+* This is a question of context security. Otherwise use (previewClick) event.
+*/
+@Input()
+public useHtmlLinkDefaultClickEvent = false;
+```
+
+##### • HTML link target, default: `'_blank'` (new tab)  
+```ts
+/**
+* HtmlLinkTarget: where the HTML link should be opened on click.
+* Only has an effect if [useHtmlLinkDefaultClickEvent]="true"
+*/
+@Input()
+public htmlLinkTarget: HtmlLinkTarget = '_blank';
+```
+
+##### • Event emits the URL on click
+```ts
+/** Event emitter: on click to handle the click event, emits the clicked URL */
 @Output()
-public previewClick = new EventEmitter();
+public previewClicked = new EventEmitter<string>();
 ```
 ```html
-<!-- $event: string is linkUrl --> 
-(previewClick)="previewClick($event)"
+<!-- $event: string is URL --> 
+(previewClick)="previewClicked($event)"
 ```
 
 ### Theming
@@ -156,8 +183,9 @@ might conclude in unintended results. To use the modern theme, just pass the css
 ```html
 <ngx-link-preview class="modern"></ngx-link-preview>
 ```
-** Feel free to create more themes and submit a pull request or open an issue! **  
-You can use this skeleton:
+** Feel free to create more themes and submit a pull request or open an issue! **
+<details><summary>You can use this skeleton:</summary>
+<p>
 ```scss
 .ngx-link-preview-container {
    .og-link-preview {
@@ -190,6 +218,9 @@ You can use this skeleton:
    }
 }
 ```
+</p>
+</details>
+
 
 ### Loading spinner
 You can customize the loading spinner by passing your spinner as content of the component:
@@ -198,7 +229,7 @@ You can customize the loading spinner by passing your spinner as content of the 
     <my-spinner-component></my-spinner-component>
 </ngx-link-preview>
 
-<!-- or alternatively: -->
+<!-- or alternatively (any child element): -->
 <ngx-link-preview>
     <div class="spinner"></div>
 </ngx-link-preview>
@@ -206,7 +237,7 @@ You can customize the loading spinner by passing your spinner as content of the 
 
 <a name="endpoint"></a>
 ### Endpoint configuration
-**Node.js example**  
+#### Node.js example  
 With node.js you can use [url-metadata](https://github.com/LevelNewsOrg/url-metadata#readme)
 ```ts
 import urlMetadata from 'url-metadata';
@@ -230,7 +261,7 @@ public decodeSafeUrl(value: string): string {
    return Buffer.from(valueBase64, 'base64').toString('utf8');
 }
 ```
-**PHP example**   
+#### PHP example   
 PHP has a builtin method to get the meta tags
 ```php
 $router->get('/meta-tags', function() {
