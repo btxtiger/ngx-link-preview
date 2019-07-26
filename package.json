@@ -12,6 +12,7 @@
       "test": "ng test",
       "lint": "ng lint",
       "e2e": "ng e2e",
+      "build:docs": "ng build --prod --output-path docs --base-href /ngx-link-preview/",
       "deploy": "sh deploy.sh"
    },
    "dependencies": {
