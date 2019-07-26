@@ -8,7 +8,7 @@ import { delay } from 'rxjs/operators';
    styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-   public links = ['/assets/open-graph-test/case-de-papel.json'];
+   public links = ['./assets/open-graph-test/medium-angular.json'];
    public colors2 = [
       '',
       'red',
@@ -42,7 +42,7 @@ export class AppComponent {
       // return this.http.get(route);
 
       // Hard code for demo purposes:
-      return this.http.get('/assets/open-graph-test/medium-angular.json').pipe(delay(2500));
+      return this.http.get('./assets/open-graph-test/medium-angular.json').pipe(delay(2500));
    };
 
    constructor(private http: HttpClient) {}
