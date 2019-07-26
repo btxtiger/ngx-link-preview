@@ -245,7 +245,7 @@ export class NgxLinkPreviewComponent implements OnChanges, OnDestroy {
    /**
     * Get sanitized image url due data often contains url errors
     */
-   private getSanitizedImageUrl(p: OpenGraphMetaData): string {
+   public getSanitizedImageUrl(p: OpenGraphMetaData): string {
       if (p['og:image'].startsWith('http')) {
          return p['og:image'];
       } else if (p['og:image'].startsWith('www')) {
