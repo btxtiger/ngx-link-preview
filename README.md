@@ -46,7 +46,7 @@ export class AppModule { }
 #### • Two **required** parameters:
 ##### 1. `[apiRoute]="myApiRoute"`  
 _apiRoute_ accepts any url, where you want to retrieve the metadata from. The 
-target url will be attached as base64 urlencoded query parameter. 
+target url will be attached by the component as base64 urlencoded query parameter. 
 ```ts
 /** API route where to get the meta data from, component will build the full request url
  * Schema: api.example.com/api/get-meta-data?url=d3d3LmV4YW1wbGUuY29t
@@ -57,7 +57,7 @@ public apiRoute: string;
 
 ##### 2. `[getApiEndpoint$]="apiCallbackFn"`   
 A generic callback function that returns an observable, that runs the api request on subscription.
-You can use the default httpClient method, or your configured backend wrapper observable.
+You can use the default Angular HttpClient method, or your configured backend wrapper observable.
 ```ts
 /** Method that does the API request, provide as class member arrow function from parent */
 @Input()
@@ -71,7 +71,7 @@ public apiCallbackFn = (route: string) => {
 };
 ```
 #### • **Optional** parameters
-##### • Links that should be rendered, default: `[]`'
+##### • Links that should be rendered, default: `[]`
 ```ts
 /** Plain links string array */
 @Input()
