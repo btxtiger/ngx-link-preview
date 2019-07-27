@@ -78,7 +78,7 @@ public apiCallbackFn = (route: string) => {
 public links: string[] = [];
 ````
 
-##### • Input string that should be parsed for links, can be combined with `links[]
+##### • Input string that should be parsed for links, can be combined with `links[]`
 ```ts
 /** Input string to parse for links */
 @Input()
