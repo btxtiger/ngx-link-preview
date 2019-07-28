@@ -1,52 +1,20 @@
 /* tslint:disable:max-line-length */
 export const NgxLinkPreviewLoadingSpinner = `
-<svg class="lds-spinner" width="70px"  height="70px"  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid" style="background: none;"><g transform="rotate(0 50 50)">
-  <rect x="47" y="33" rx="9.4" ry="6.6000000000000005" width="6" height="6" fill="rgba(78.43137254901961%,78.43137254901961%,78.43137254901961%,0.4)">
-    <animate attributeName="opacity" values="1;0" keyTimes="0;1" dur="0.9s" begin="-0.8250000000000001s" repeatCount="indefinite"></animate>
-  </rect>
-</g><g transform="rotate(30 50 50)">
-  <rect x="47" y="33" rx="9.4" ry="6.6000000000000005" width="6" height="6" fill="rgba(78.43137254901961%,78.43137254901961%,78.43137254901961%,0.4)">
-    <animate attributeName="opacity" values="1;0" keyTimes="0;1" dur="0.9s" begin="-0.75s" repeatCount="indefinite"></animate>
-  </rect>
-</g><g transform="rotate(60 50 50)">
-  <rect x="47" y="33" rx="9.4" ry="6.6000000000000005" width="6" height="6" fill="rgba(78.43137254901961%,78.43137254901961%,78.43137254901961%,0.4)">
-    <animate attributeName="opacity" values="1;0" keyTimes="0;1" dur="0.9s" begin="-0.6749999999999999s" repeatCount="indefinite"></animate>
-  </rect>
-</g><g transform="rotate(90 50 50)">
-  <rect x="47" y="33" rx="9.4" ry="6.6000000000000005" width="6" height="6" fill="rgba(78.43137254901961%,78.43137254901961%,78.43137254901961%,0.4)">
-    <animate attributeName="opacity" values="1;0" keyTimes="0;1" dur="0.9s" begin="-0.6s" repeatCount="indefinite"></animate>
-  </rect>
-</g><g transform="rotate(120 50 50)">
-  <rect x="47" y="33" rx="9.4" ry="6.6000000000000005" width="6" height="6" fill="rgba(78.43137254901961%,78.43137254901961%,78.43137254901961%,0.4)">
-    <animate attributeName="opacity" values="1;0" keyTimes="0;1" dur="0.9s" begin="-0.525s" repeatCount="indefinite"></animate>
-  </rect>
-</g><g transform="rotate(150 50 50)">
-  <rect x="47" y="33" rx="9.4" ry="6.6000000000000005" width="6" height="6" fill="rgba(78.43137254901961%,78.43137254901961%,78.43137254901961%,0.4)">
-    <animate attributeName="opacity" values="1;0" keyTimes="0;1" dur="0.9s" begin="-0.45s" repeatCount="indefinite"></animate>
-  </rect>
-</g><g transform="rotate(180 50 50)">
-  <rect x="47" y="33" rx="9.4" ry="6.6000000000000005" width="6" height="6" fill="rgba(78.43137254901961%,78.43137254901961%,78.43137254901961%,0.4)">
-    <animate attributeName="opacity" values="1;0" keyTimes="0;1" dur="0.9s" begin="-0.375s" repeatCount="indefinite"></animate>
-  </rect>
-</g><g transform="rotate(210 50 50)">
-  <rect x="47" y="33" rx="9.4" ry="6.6000000000000005" width="6" height="6" fill="rgba(78.43137254901961%,78.43137254901961%,78.43137254901961%,0.4)">
-    <animate attributeName="opacity" values="1;0" keyTimes="0;1" dur="0.9s" begin="-0.3s" repeatCount="indefinite"></animate>
-  </rect>
-</g><g transform="rotate(240 50 50)">
-  <rect x="47" y="33" rx="9.4" ry="6.6000000000000005" width="6" height="6" fill="rgba(78.43137254901961%,78.43137254901961%,78.43137254901961%,0.4)">
-    <animate attributeName="opacity" values="1;0" keyTimes="0;1" dur="0.9s" begin="-0.225s" repeatCount="indefinite"></animate>
-  </rect>
-</g><g transform="rotate(270 50 50)">
-  <rect x="47" y="33" rx="9.4" ry="6.6000000000000005" width="6" height="6" fill="rgba(78.43137254901961%,78.43137254901961%,78.43137254901961%,0.4)">
-    <animate attributeName="opacity" values="1;0" keyTimes="0;1" dur="0.9s" begin="-0.15s" repeatCount="indefinite"></animate>
-  </rect>
-</g><g transform="rotate(300 50 50)">
-  <rect x="47" y="33" rx="9.4" ry="6.6000000000000005" width="6" height="6" fill="rgba(78.43137254901961%,78.43137254901961%,78.43137254901961%,0.4)">
-    <animate attributeName="opacity" values="1;0" keyTimes="0;1" dur="0.9s" begin="-0.075s" repeatCount="indefinite"></animate>
-  </rect>
-</g><g transform="rotate(330 50 50)">
-  <rect x="47" y="33" rx="9.4" ry="6.6000000000000005" width="6" height="6" fill="rgba(78.43137254901961%,78.43137254901961%,78.43137254901961%,0.4)">
-    <animate attributeName="opacity" values="1;0" keyTimes="0;1" dur="0.9s" begin="0s" repeatCount="indefinite"></animate>
-  </rect>
+<svg class="lds-message" width="60px"  height="60px"  xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid"><g transform="translate(20 50)">
+<circle cx="0" cy="0" r="7" fill="#1B364C" transform="scale(0.99275 0.99275)">
+  <animateTransform attributeName="transform" type="scale" begin="-0.375s" calcMode="spline" keySplines="0.3 0 0.7 1;0.3 0 0.7 1" values="0;1;0" keyTimes="0;0.5;1" dur="1s" repeatCount="indefinite"></animateTransform>
+</circle>
+</g><g transform="translate(40 50)">
+<circle cx="0" cy="0" r="7" fill="#285072" transform="scale(0.773605 0.773605)">
+  <animateTransform attributeName="transform" type="scale" begin="-0.25s" calcMode="spline" keySplines="0.3 0 0.7 1;0.3 0 0.7 1" values="0;1;0" keyTimes="0;0.5;1" dur="1s" repeatCount="indefinite"></animateTransform>
+</circle>
+</g><g transform="translate(60 50)">
+<circle cx="0" cy="0" r="7" fill="#346B99" transform="scale(0.42525 0.42525)">
+  <animateTransform attributeName="transform" type="scale" begin="-0.125s" calcMode="spline" keySplines="0.3 0 0.7 1;0.3 0 0.7 1" values="0;1;0" keyTimes="0;0.5;1" dur="1s" repeatCount="indefinite"></animateTransform>
+</circle>
+</g><g transform="translate(80 50)">
+<circle cx="0" cy="0" r="7" fill="#999999" transform="scale(0.113418 0.113418)">
+  <animateTransform attributeName="transform" type="scale" begin="0s" calcMode="spline" keySplines="0.3 0 0.7 1;0.3 0 0.7 1" values="0;1;0" keyTimes="0;0.5;1" dur="1s" repeatCount="indefinite"></animateTransform>
+</circle>
 </g></svg>
 `;
