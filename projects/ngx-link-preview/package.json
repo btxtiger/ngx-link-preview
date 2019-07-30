@@ -11,8 +11,12 @@
    "keywords": [
       "angular",
       "angular-component",
+      "ui",
+      "library",
       "opengraph",
-      "link-preview"
+      "link-preview",
+      "preview web links",
+      "render web links"
    ],
    "peerDependencies": {
       "@angular/common": "^8.0.3",

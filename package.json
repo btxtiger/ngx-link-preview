@@ -12,8 +12,12 @@
    "keywords": [
       "angular",
       "angular-component",
+      "ui",
+      "library",
       "opengraph",
-      "link-preview"
+      "link-preview",
+      "preview web links",
+      "render web links"
    ],
    "scripts": {
       "ng": "ng",
