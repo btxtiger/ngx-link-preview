@@ -265,13 +265,59 @@ public decodeSafeUrl(value: string): string {
    return Buffer.from(valueBase64, 'base64').toString('utf8');
 }
 ```
-#### PHP example   
-PHP has a builtin method to get the meta tags
+#### PHP example
 ```php
 $router->get('/meta-tags', function() {
-   $url = $_GET['url'];
-   $urlDecoded = base64_decode(urldecode($url));
-   return response()->json(get_meta_tags($urlDecoded));
+  $url = $_GET['url'];
+  $urlDecoded = base64_decode(urldecode($url));
+  ini_set('user_agent', 'Mozilla/4.0 (compatible; MSIE 6.0)');
+  $sites_html = file_get_contents($urlDecoded);
+
+  $html = new DOMDocument();
+  @$html->loadHTML($sites_html);
+
+  $metaTags = [
+      'title' => '',
+      'description' => '',
+      'image' => '',
+      'canonical' => '',
+      'url' => '',
+      'author' => '',
+      'availability' => '',
+      'keywords' => '',
+      'og:description' => '',
+      'og:determiner' => '',
+      'og:image' => '',
+      'og:image:height' => '',
+      'og:image:secure_url' => '',
+      'og:image:type' => '',
+      'og:image:width' => '',
+      'og:locale' => '',
+      'og:locale:alternate' => '',
+      'og:site_name' => '',
+      'og:title' => '',
+      'og:type' => '',
+      'og:url' => '',
+      'price' => '',
+      'priceCurrency' => '',
+      'source' => '',
+  ];
+
+  foreach ($html->getElementsByTagName('meta') as $meta) {
+      $property = $meta->getAttribute('property');
+      $content = $meta->getAttribute('content');
+      if (strpos($property, 'og') === 0) {
+          $metaTags[$property] = $content;
+
+          if ($property === 'og:title') $metaTags['title'] = $property;
+          if ($property === 'og:description') $metaTags['description'] = $property;
+          if ($property === 'og:image') $metaTags['image'] = $property;
+      }
+  }
+  $metaTags['canonical'] = $urlDecoded;
+  $metaTags['url'] = $urlDecoded;
+
+  return response()->json($metaTags);
 });
 ```
 
