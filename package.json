@@ -1,6 +1,6 @@
 {
   "name": "ngx-link-preview-demo",
-  "version": "1.1.3",
+  "version": "1.1.4",
   "description": "The Open Graph link preview component for Angular 6+",
   "author": "Jonas Gnioui <btxtiger@outlook.com>",
   "license": "MIT",
