@@ -1,7 +1,7 @@
 # ngx-link-preview
 [![npm](https://img.shields.io/npm/v/ngx-link-preview.svg)](https://www.npmjs.com/package/ngx-link-preview)
 [![npm](https://img.shields.io/npm/dm/ngx-link-preview.svg)](https://www.npmjs.com/package/ngx-link-preview)
-### The Open Graph link preview component for Angular
+### The Open Graph link preview component for Angular 6+
 ![](https://raw.githubusercontent.com/btxtiger/ngx-link-preview/master/src/assets/link-preview-2.png)
 
 ### <a href="https://btxtiger.github.io/ngx-link-preview/" target="_blank">⇨ DEMO</a>
@@ -22,6 +22,7 @@ yarn add ngx-link-preview
 - Theming: `default` and `modern` theme included
 
 ### Requirements
+- Angular 6+
 - You will need to create an endpoint at your backend to parse an url for meta tags.   
 [See info below](#endpoint)
 
