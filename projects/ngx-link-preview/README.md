@@ -1,6 +1,8 @@
 # ngx-link-preview
 [![npm](https://img.shields.io/npm/v/ngx-link-preview.svg)](https://www.npmjs.com/package/ngx-link-preview)
 [![npm](https://img.shields.io/npm/dm/ngx-link-preview.svg)](https://www.npmjs.com/package/ngx-link-preview)
+[![npm](https://img.shields.io/librariesio/release/npm/ngx-link-preview)](https://www.npmjs.com/package/ngx-link-preview)
+
 ### The Open Graph link preview component for Angular 6+
 ![](https://raw.githubusercontent.com/btxtiger/ngx-link-preview/master/src/assets/link-preview-2.png)
 
