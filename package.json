@@ -27,7 +27,7 @@
     "lint": "ng lint",
     "e2e": "ng e2e",
     "build:demo": "ng build --configuration production --output-path docs --base-href /ngx-link-preview/",
-    "build:lib": "ng build ngx-link-preview",
+    "build:lib": "ng build --configuration production ngx-link-preview",
     "publish": "npm run build:demo && npm run build:lib && cd dist/ngx-link-preview && npm publish",
     "deploy": "sh deploy.sh"
   },
