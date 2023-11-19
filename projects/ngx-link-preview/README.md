@@ -11,6 +11,9 @@
 ### Installation
 ```sh
 npm install --save ngx-link-preview
+
+# For Angular <= 13
+npm install --save ngx-link-preview@1.1.7
 ```
 ```sh
 yarn add ngx-link-preview
